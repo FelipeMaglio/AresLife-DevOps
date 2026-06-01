@@ -1,0 +1,5 @@
+package com.fiap.areslife.enums;
+
+public enum SeveridadeAlerta {
+    BAIXA, MEDIA, ALTA, CRITICA
+}
