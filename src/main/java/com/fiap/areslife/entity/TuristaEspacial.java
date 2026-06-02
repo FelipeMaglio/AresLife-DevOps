@@ -1,5 +1,7 @@
 package com.fiap.areslife.entity;
 
+import com.fiap.areslife.enums.Localizacao;
+import com.fiap.areslife.enums.StatusTurista;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,11 +35,13 @@ public class TuristaEspacial {
     @Column(nullable = false)
     private String pais;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String destino;
+    private Localizacao destino;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private StatusTurista status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_HABITANTE")

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MonitoramentoRecursoRepository extends JpaRepository<MonitoramentoRecurso, Long> {
-    List<MonitoramentoRecurso> findByIdIdRecursoOrderByIdDataRegistroDesc(Long recursoId);
+    List<MonitoramentoRecurso> findByRecurso_IdOrderByDataRegistroDesc(Long idRecurso);
 }
