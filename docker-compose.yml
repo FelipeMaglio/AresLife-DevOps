@@ -1,0 +1,51 @@
+services:
+
+  oracle-rm563512:
+    image: gvenzl/oracle-xe:21-slim
+    container_name: oracle-rm563512
+    shm_size: 1g
+    environment:
+      ORACLE_PASSWORD: Oracle@2026
+      APP_USER: areslife
+      APP_USER_PASSWORD: Ares@2026
+    ports:
+      - "1521:1521"
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 30s
+      timeout: 20s
+      retries: 15
+      start_period: 240s
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  app-rm563512:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-rm563512
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@oracle-rm563512:1521/XEPDB1
+      SPRING_DATASOURCE_USERNAME: areslife
+      SPRING_DATASOURCE_PASSWORD: Ares@2026
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.OracleDialect
+    ports:
+      - "8080:8080"
+    depends_on:
+      oracle-rm563512:
+        condition: service_healthy
+    networks:
+      - app-network
+    restart: unless-stopped
+
+volumes:
+  oracle-data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
