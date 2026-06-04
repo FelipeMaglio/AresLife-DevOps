@@ -19,6 +19,7 @@ public class RecursoResponse extends RepresentationModel<RecursoResponse> {
 
     public RecursoResponse() {}
 
+
     public RecursoResponse(
             Long id,
             Long coloniaId,
@@ -26,8 +27,7 @@ public class RecursoResponse extends RepresentationModel<RecursoResponse> {
             BigDecimal quantidade,
             String unidade,
             BigDecimal nivelCritico,
-            BigDecimal nivelMaximo,
-            LocalDate dataAtualizacao) {
+            BigDecimal nivelMaximo) {
 
         this.id = id;
         this.coloniaId = coloniaId;
@@ -36,9 +36,7 @@ public class RecursoResponse extends RepresentationModel<RecursoResponse> {
         this.unidade = unidade;
         this.nivelCritico = nivelCritico;
         this.nivelMaximo = nivelMaximo;
-        this.dataAtualizacao = dataAtualizacao;
     }
-
     public Long getId() { return id; }
     public Long getColoniaId() { return coloniaId; }
     public TipoRecurso getTipoRecurso() { return tipoRecurso; }

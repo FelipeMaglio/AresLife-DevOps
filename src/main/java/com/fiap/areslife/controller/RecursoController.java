@@ -2,9 +2,11 @@ package com.fiap.areslife.controller;
 
 import com.fiap.areslife.dto.request.AbastecerRequest;
 import com.fiap.areslife.dto.request.RecursoRequest;
+import com.fiap.areslife.dto.response.RecursoResponse;
 import com.fiap.areslife.entity.Recurso;
 import com.fiap.areslife.enums.TipoRecurso;
 import com.fiap.areslife.service.RecursoService;
+import com.fiap.areslife.service.mapper.RecursoMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -22,24 +24,43 @@ public class RecursoController {
 
     private final RecursoService recursoService;
 
-    @GetMapping
     @Operation(summary = "Listar recursos de uma colônia")
-    public ResponseEntity<List<Recurso>> listar(@PathVariable Long coloniaId) {
-        return ResponseEntity.ok(recursoService.listarPorColonia(coloniaId));
-    }
+    @GetMapping
+    public ResponseEntity<List<RecursoResponse>> listar(
+            @PathVariable Long coloniaId) {
 
+        return ResponseEntity.ok(
+                recursoService.listarPorColonia(coloniaId)
+                        .stream()
+                        .map(RecursoMapper::toResponse)
+                        .toList()
+        );
+    }
     @GetMapping("/{id}")
     @Operation(summary = "Buscar recurso por ID")
-    public ResponseEntity<Recurso> buscarPorId(@PathVariable Long coloniaId, @PathVariable Long id) {
-        return ResponseEntity.ok(recursoService.buscarPorId(id));
+    public ResponseEntity<RecursoResponse> buscarPorId(
+            @PathVariable Long coloniaId,
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                RecursoMapper.toResponse(
+                        recursoService.buscarPorId(id)
+                )
+        );
     }
 
-    @PostMapping
+
     @Operation(summary = "Criar recurso para a colônia")
-    public ResponseEntity<Recurso> criar(
+    @PostMapping
+    public ResponseEntity<RecursoResponse> criar(
             @PathVariable Long coloniaId,
             @Valid @RequestBody RecursoRequest request) {
-        return ResponseEntity.status(201).body(recursoService.criar(request));
+
+        return ResponseEntity.status(201).body(
+                RecursoMapper.toResponse(
+                        recursoService.criar(request)
+                )
+        );
     }
 
     @DeleteMapping("/{id}")
@@ -51,11 +72,11 @@ public class RecursoController {
 
     @PostMapping("/{id}/abastecer")
     @Operation(summary = "Abastecer recurso")
-    public ResponseEntity<Recurso> abastecer(
+    public ResponseEntity<RecursoResponse> abastecer(
             @PathVariable Long coloniaId,
             @PathVariable Long id,
             @Valid @RequestBody AbastecerRequest request) {
-        return ResponseEntity.ok(recursoService.abastecer(id, request));
+        return ResponseEntity.ok((RecursoMapper.toResponse(recursoService.abastecer(id, request))));
     }
 
     @GetMapping("/{id}/autonomia")
@@ -65,6 +86,7 @@ public class RecursoController {
             @PathVariable Long id,
             @RequestParam TipoRecurso tipo) {
         int dias = recursoService.calcularAutonomia(coloniaId, tipo);
+
         return ResponseEntity.ok("Autonomia estimada: " + dias + " dia(s) para o recurso " + tipo);
     }
 }
