@@ -43,6 +43,8 @@ public class MonitoramentoRecurso {
     @Column(nullable = false)
     private String status;
 
-    @Column(length = 500)
+    @Column(name = "observacao", length = 300)
     private String observacao;
+
+
 }

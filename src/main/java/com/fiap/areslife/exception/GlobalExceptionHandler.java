@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -31,6 +33,14 @@ public class GlobalExceptionHandler {
         );
     }
 
+    // ✅ Captura BadCredentialsException e retorna 401 em vez de 500
+    @ExceptionHandler({BadCredentialsException.class, AuthenticationException.class})
+    public ResponseEntity<ErrorResponse> handleBadCredentials(Exception ex, HttpServletRequest req) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                new ErrorResponse(LocalDateTime.now(), 401, "Unauthorized", "Email ou senha inválidos", req.getRequestURI())
+        );
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidation(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -42,35 +52,21 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleJsonParse(HttpMessageNotReadableException ex, HttpServletRequest req) {
+        String message = "Verifique os valores enviados no JSON.";
+        if (ex.getMessage().contains("Localizacao")) {
+            message = "Destino inválido. Valores permitidos: MARTE, LUA.";
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new ErrorResponse(LocalDateTime.now(), 400, "Bad Request", message, req.getRequestURI())
+        );
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneral(Exception ex, HttpServletRequest req) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                 new ErrorResponse(LocalDateTime.now(), 500, "Internal Server Error", ex.getMessage(), req.getRequestURI())
         );
     }
-
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponse> handleJsonParse(
-            HttpMessageNotReadableException ex,
-            HttpServletRequest req) {
-
-        String message = "Verifique os valores enviados no JSON.";
-
-        if (ex.getMessage().contains("Localizacao")) {
-            message = "Destino inválido. Valores permitidos: MARTE, LUA.";
-        }
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ErrorResponse(
-                        LocalDateTime.now(),
-                        400,
-                        "Bad Request",
-                        message,
-                        req.getRequestURI()
-                )
-        );
-    }
-
-
-
 }

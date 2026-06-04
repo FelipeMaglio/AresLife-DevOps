@@ -11,9 +11,6 @@ import lombok.*;
 @AllArgsConstructor
 public class Astronauta extends Habitante {
 
-    @Column(name = "especialidade")
-    private String especialidade;
-
-    @Column(name = "missao_atual")
+    @Column(name = "missao_atual", length = 100)
     private String missaoAtual;
 }

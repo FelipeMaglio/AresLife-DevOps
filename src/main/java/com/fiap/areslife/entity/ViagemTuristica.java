@@ -41,14 +41,16 @@ public class ViagemTuristica {
     @Column(name = "DATA_RETORNO",nullable = false)
     private LocalDate dataRetorno;
 
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "STATUS_VIAGEM",nullable = false)
+    @Column(name = "status_viagem", nullable = false, length = 20)
     private StatusViagem statusViagem;
 
-    @Column(nullable = false, precision = 14, scale = 2)
+    @Column(name = "valor", precision = 14, scale = 2)
     private BigDecimal valor;
 
+
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "pacote", length = 20)
     private PacoteViagem pacote;
 }

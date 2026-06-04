@@ -48,6 +48,10 @@ public class Habitante {
     @Column(nullable = false)
     private StatusHabitante status = StatusHabitante.ATIVO;
 
+    @Column(name = "especialidade", length = 100)
+    private String especialidade;
+
+
     @OneToMany(mappedBy = "habitante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SaudeHabitante> registrosSaude;
 
