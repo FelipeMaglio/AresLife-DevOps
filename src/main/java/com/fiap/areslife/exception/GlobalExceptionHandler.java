@@ -3,6 +3,7 @@ package com.fiap.areslife.exception;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -47,6 +48,29 @@ public class GlobalExceptionHandler {
                 new ErrorResponse(LocalDateTime.now(), 500, "Internal Server Error", ex.getMessage(), req.getRequestURI())
         );
     }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleJsonParse(
+            HttpMessageNotReadableException ex,
+            HttpServletRequest req) {
+
+        String message = "Verifique os valores enviados no JSON.";
+
+        if (ex.getMessage().contains("Localizacao")) {
+            message = "Destino inválido. Valores permitidos: MARTE, LUA.";
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new ErrorResponse(
+                        LocalDateTime.now(),
+                        400,
+                        "Bad Request",
+                        message,
+                        req.getRequestURI()
+                )
+        );
+    }
+
 
 
 }

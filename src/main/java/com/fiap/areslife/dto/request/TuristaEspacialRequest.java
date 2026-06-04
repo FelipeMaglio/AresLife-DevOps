@@ -1,11 +1,17 @@
 package com.fiap.areslife.dto.request;
 
 import com.fiap.areslife.enums.Localizacao;
+import com.fiap.areslife.enums.StatusTurista;
 import jakarta.validation.constraints.*;
 
 public record TuristaEspacialRequest(
         @NotBlank String nome,
-        @NotNull @Min(18) @Max(99) Integer idade,
+        @NotNull(message = "Idade é obrigatória")
+        @Min(value = 18, message = "Idade inválida, permitido apenas maiores de 18 anos.")
+        @Max(value = 99, message = "Idade máxima permitida é 99 anos.")
+        Integer idade,
         @NotBlank String pais,
-        @NotNull Localizacao destino
+        @NotNull Localizacao destino,
+        @NotNull
+        StatusTurista status
 ) {}

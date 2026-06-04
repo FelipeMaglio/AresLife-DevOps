@@ -50,13 +50,33 @@ public class TuristaEspacialService {
                 .idade(request.idade())
                 .pais(request.pais())
                 .destino(request.destino())
-                .status(StatusTurista.AGUARDANDO.AGUARDANDO)
+                .status(StatusTurista.AGUARDANDO)
                 .dataCadastro(LocalDate.now())
                 .build();
 
         return passageiroRepository.save(turistaEspacial);
     }
 
+    @Transactional
+    public TuristaEspacial atualizar(Long id, TuristaEspacialRequest request) {
+
+        TuristaEspacial turista = buscarPorId(id);
+
+        if (request.idade() < 18 || request.idade() > 99) {
+            throw new BusinessException("Idade do passageiro deve ser entre 18 e 99 anos.");
+        }
+
+        turista.setNome(request.nome());
+        turista.setIdade(request.idade());
+        turista.setPais(request.pais());
+        turista.setDestino(request.destino());
+
+        if (request.status() != null) {
+            turista.setStatus(request.status());
+        }
+
+        return passageiroRepository.save(turista);
+    }
     @Transactional
     public TuristaEspacial atualizarStatus(Long id, StatusTurista novoStatus) {
         TuristaEspacial turistaEspacial = buscarPorId(id);
