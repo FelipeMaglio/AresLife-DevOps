@@ -27,15 +27,16 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        // Spring Security 6.4+: UserDetailsService é obrigatório no construtor
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(customUserDetailsService);
+
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+
+        provider.setUserDetailsService(customUserDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
+
         return provider;
     }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
