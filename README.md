@@ -1,8 +1,8 @@
-# 🏥 AresLife — API
+# 🚀 AresLife — API
 
 Projeto desenvolvido para a **Global Solution 2026** utilizando **Java + Spring Boot**.
 
-Sistema inteligente para gerenciamento de saúde e emergências, com monitoramento, alertas e histórico clínico.
+Plataforma integrada de simulação de colonização e turismo espacial que utiliza IoT e Cloud para monitorar habitats espaciais, gerenciar recursos críticos, ocupantes e operações relacionadas à colonização da Lua e de Marte.
 
 ---
 
@@ -37,25 +37,29 @@ Sistema inteligente para gerenciamento de saúde e emergências, com monitoramen
 
 # 📌 Descrição do Projeto
 
-O **AresLife** é uma API REST desenvolvida em **Java com Spring Boot** com o objetivo de promover a gestão inteligente de saúde e emergências através de:
+O **AresLife** é uma API REST desenvolvida em **Java com Spring Boot** com o objetivo de simular e gerenciar habitats espaciais para colonização e turismo, através de:
 
-- monitoramento preventivo
-- alertas inteligentes
-- histórico longitudinal do paciente
+- monitoramento de recursos críticos em tempo real (O₂, água, energia, temperatura)
+- alertas automáticos para situações de risco
+- histórico longitudinal de eventos e ocupantes
 
-A plataforma organiza de forma completa o ecossistema de saúde, incluindo:
+A plataforma organiza de forma completa o ecossistema de habitats espaciais, incluindo:
 
-- cadastro e gestão de pacientes
-- <!-- ⚠️ ADAPTAR: listar aqui as entidades principais do projeto (ex: usuários, ocorrências, etc.) -->
-- histórico clínico completo
-- consultas e tratamentos
-- dashboard com dados consolidados
+- cadastro e gestão de turistas espaciais e habitantes (astronautas e turistas)
+- gestão de colônias na Terra, Lua e Marte
+- controle de recursos críticos com simulação de consumo e projeção de autonomia
+- sistema de alertas automáticos com thresholds configuráveis
+- monitoramento de saúde dos habitantes com geração automática de alertas críticos
+- gestão de treinamentos e viagens turísticas com controle de pacotes
+- autenticação JWT com registro e login de usuários
 
-A solução foi criada com base no desafio proposto pela **<!-- ⚠️ ADAPTAR: nome do parceiro/desafio da Global Solution -->**, focando em:
+A solução foi criada com base no desafio proposto pela **Global Solution FIAP 2026**, focando em:
 
-- <!-- ⚠️ ADAPTAR: objetivos específicos do projeto AresLife -->
-- monitoramento contínuo
-- centralização do histórico do paciente
+- segurança humana em ambientes espaciais hostis
+- operação autônoma com latência de até 22 minutos (Marte)
+- tomada de decisão baseada em dados em tempo real
+- gestão de turistas civis e astronautas no mesmo habitat
+- missões alinhadas com NASA Artemis · SpaceX Starship · ESA Moon Village
 
 ---
 
@@ -63,11 +67,12 @@ A solução foi criada com base no desafio proposto pela **<!-- ⚠️ ADAPTAR: 
 
 O sistema possui funcionalidades inteligentes capazes de:
 
-- gerar alertas preventivos
-- calcular risco de saúde
-- <!-- ⚠️ ADAPTAR: adicionar funcionalidades específicas do AresLife -->
-- acompanhar tratamentos ativos
-- fornecer histórico longitudinal completo
+- simular habitats espaciais (colônias) com consumo diário de recursos via `/simular-dia`
+- monitorar recursos vitais (O₂, água, energia, alimentação) em tempo real com cálculo de autonomia
+- aumentar a segurança operacional com thresholds configuráveis e alertas automáticos
+- apoiar missões espaciais futuras com histórico completo de eventos e saúde dos habitantes
+- melhorar a gestão de turistas com perfis diferenciados, treinamentos obrigatórios e viagens com pacotes
+- automatizar alertas 24/7 — inclusive disparados por sinais vitais críticos dos habitantes
 
 ---
 
@@ -75,11 +80,12 @@ O sistema possui funcionalidades inteligentes capazes de:
 
 | Benefício | Impacto |
 |---|---|
-| Alertas automáticos | Reduz falhas no acompanhamento e aumenta retorno dos pacientes |
-| Score de risco | Permite priorização de atendimentos críticos |
-| <!-- ⚠️ ADAPTAR: benefício específico do AresLife --> | <!-- ⚠️ ADAPTAR: impacto --> |
-| Histórico longitudinal completo | Elimina perda de informações clínicas entre consultas |
-| Dashboard consolidado | Dá visibilidade gerencial para tomada de decisões |
+| Alertas automáticos de risco crítico | Detecção imediata — protege vidas em ambientes hostis |
+| Simulação de consumo diário | Permite planejamento logístico de missões com dados reais |
+| Gestão de turistas e astronautas | Protocolos de segurança distintos para civis e profissionais |
+| Treinamento obrigatório antes de viagem | Garante preparo mínimo antes do embarque espacial |
+| Histórico de saúde dos habitantes | Rastreabilidade completa de sinais vitais por habitante |
+| Dashboard consolidado | Dá visibilidade gerencial para operadores tomarem decisões rápidas |
 | Infraestrutura em nuvem Azure | Alta disponibilidade e escalabilidade sem servidor físico |
 | Banco Oracle em container | Dados persistidos com segurança e fácil restauração |
 
@@ -88,12 +94,13 @@ O sistema possui funcionalidades inteligentes capazes de:
 # 🛠️ Tecnologias Utilizadas
 
 - **Java 21**
-- **Spring Boot**
+- **Spring Boot 4.0.6**
 - **Spring Data JPA**
 - **Spring Validation**
 - **Spring HATEOAS**
+- **Spring Security + JWT**
 - **Oracle Database**
-- **Swagger / OpenAPI**
+- **Swagger / OpenAPI (springdoc 2.5.0)**
 - **Maven**
 - **Lombok**
 - **Docker**
@@ -311,8 +318,8 @@ https://www.oracle.com/tools/downloads/sqldev-downloads.html
 | Campo | Valor |
 |---|---|
 | Name | AresLife Azure |
-| Username | <!-- ⚠️ ADAPTAR: usuário do banco configurado no deploy.sh --> |
-| Password | <!-- ⚠️ ADAPTAR: senha configurada no deploy.sh --> |
+| Username | areslife |
+| Password | Ares@2026 |
 | Connection Type | Basic |
 | Hostname | IP_DA_VM |
 | Port | 1521 |
@@ -388,9 +395,16 @@ Após conectar, expanda:
 ```text
 AresLife Azure
  └── Other Users
-     └── <!-- ⚠️ ADAPTAR: schema/usuário do banco -->
+     └── ARESLIFE
          └── Tables
-             <!-- ⚠️ ADAPTAR: listar as tabelas do projeto AresLife -->
+             ├── TURISTAS
+             ├── COLONIAS
+             ├── RECURSOS
+             ├── HABITANTES
+             ├── SAUDE_HABITANTES
+             ├── TREINAMENTOS
+             ├── VIAGENS
+             └── ALERTAS
 ```
 
 ---
@@ -400,9 +414,15 @@ AresLife Azure
 Abra um SQL Worksheet e execute:
 
 ```sql
--- ⚠️ ADAPTAR: substituir pelos SELECTs das tabelas do AresLife
-SELECT * FROM <!-- tabela1 -->;
-SELECT * FROM <!-- tabela2 -->;
+SELECT * FROM turistas;
+
+SELECT * FROM colonias;
+
+SELECT * FROM recursos;
+
+SELECT * FROM habitantes;
+
+SELECT * FROM alertas;
 ```
 
 ---
@@ -546,98 +566,374 @@ O Docker Compose é utilizado para orquestrar:
 
 # 📌 Funcionalidades da API
 
-<!-- ⚠️ ADAPTAR: substituir pelos endpoints reais do AresLife abaixo -->
+> ⚠️ A API utiliza autenticação JWT. Antes de usar os endpoints abaixo, realize o **registro e login** para obter o token.
 
-# ✅ <!-- ⚠️ ADAPTAR: nome do recurso, ex: Cadastro de Usuários -->
+---
+
+# 🔐 Autenticação
+
+### Registrar usuário
+
+```http
+POST /auth/register
+```
+
+```json
+{
+  "email": "vi@teste.com",
+  "senha": "123456"
+}
+```
+
+### Login (obter token JWT)
+
+```http
+POST /auth/login
+```
+
+```json
+{
+  "email": "vi@teste.com",
+  "senha": "123456"
+}
+```
+
+> O token retornado deve ser enviado no header `Authorization: Bearer {token}` nas demais requisições.
+
+---
+
+# ✅ Turistas Espaciais
 
 ### Permite
 
-- <!-- ⚠️ ADAPTAR -->
+- cadastrar turista com destino (Marte ou Lua) e status
+- listar todos os turistas
+- buscar turista por ID
+- atualizar dados do turista
+- deletar turista
 
 ### Endpoints
 
 ```http
-<!-- ⚠️ ADAPTAR: ex:
-POST /usuarios
-GET /usuarios
-GET /usuarios/{id}
-PUT /usuarios/{id}
-DELETE /usuarios/{id}
--->
+GET    /api/turistas
+GET    /api/turistas/{id}
+POST   /api/turistas
+PUT    /api/turistas/{id}
+DELETE /api/turistas/{id}
 ```
+
+### Exemplo de body (POST/PUT)
+
+```json
+{
+  "nome": "Marina Magalhães",
+  "idade": 19,
+  "pais": "Brasil",
+  "destino": "Marte",
+  "status": "Em treinamento"
+}
+```
+
+> Destinos válidos: `Marte`, `Lua` — idade mínima obrigatória.
+
+---
+
+# ✅ Colônias
+
+### Permite
+
+- criar colônias em Marte ou Lua com capacidade máxima
+- listar e buscar colônias
+- atualizar dados da colônia
+- deletar colônia
+- **simular consumo de recursos de um dia**
+
+### Endpoints
+
+```http
+GET    /api/colonias
+GET    /api/colonias/{id}
+POST   /api/colonias
+PUT    /api/colonias/{id}
+DELETE /api/colonias/{id}
+POST   /api/colonias/{id}/simular-dia
+```
+
+### Exemplo de body (POST/PUT)
+
+```json
+{
+  "nome": "Base Alpha",
+  "localizacao": "MARTE",
+  "capacidadeMax": 50,
+  "dataFundacao": "2035-03-15",
+  "descricao": "Primeira base humana permanente em Marte"
+}
+```
+
+> Localizações válidas: `MARTE`, `LUA`
+
+---
+
+# ✅ Recursos Críticos
+
+### Permite
+
+- criar recursos (OXIGENIO, AGUA, ENERGIA, ALIMENTACAO) vinculados a uma colônia
+- listar e buscar recursos por colônia
+- abastecer recurso com quantidade específica
+- calcular autonomia do recurso com base no consumo histórico
+- deletar recurso
+
+### Endpoints
+
+```http
+GET    /api/colonias/{coloniaId}/recursos
+GET    /api/colonias/{coloniaId}/recursos/{recursoId}
+POST   /api/colonias/{coloniaId}/recursos
+POST   /api/colonias/{coloniaId}/recursos/{recursoId}/abastecer
+GET    /api/colonias/{coloniaId}/recursos/{recursoId}/autonomia?tipo=OXIGENIO
+DELETE /api/colonias/{coloniaId}/recursos/{recursoId}
+```
+
+### Exemplo de body (POST recurso)
+
+```json
+{
+  "coloniaId": 1,
+  "tipoRecurso": "OXIGENIO",
+  "quantidade": 500.00,
+  "unidade": "kg",
+  "nivelCritico": 50.00,
+  "nivelMaximo": 1000.00
+}
+```
+
+> Tipos válidos: `OXIGENIO`, `AGUA`, `ENERGIA`, `ALIMENTACAO`
+
+---
+
+# ✅ Habitantes (Astronautas e Turistas na Colônia)
+
+### Permite
+
+- criar astronauta ou turista dentro de uma colônia
+- listar todos os habitantes ou filtrar por colônia e tipo
+- buscar habitante por ID
+- registrar saída do habitante
+- transferir habitante para outra colônia
+- deletar habitante
+
+### Endpoints
+
+```http
+GET    /api/habitantes
+GET    /api/habitantes?coloniaId={id}
+GET    /api/habitantes?coloniaId={id}&tipo=TURISTA
+GET    /api/habitantes?coloniaId={id}&tipo=ASTRONAUTA
+GET    /api/habitantes/{id}
+POST   /api/habitantes/astronautas
+POST   /api/habitantes/turistas
+PATCH  /api/habitantes/{id}/saida
+PATCH  /api/habitantes/{id}/transferir?coloniaDestinoId={id}
+DELETE /api/habitantes/{id}
+```
+
+### Exemplo de body (POST astronauta)
+
+```json
+{
+  "coloniaId": 1,
+  "nome": "Neil Armstrong Jr",
+  "nacionalidade": "Americana",
+  "dataChegada": "2035-06-01",
+  "especialidade": "Geologia Marciana",
+  "missaoAtual": "Exploração do Vale Marineris"
+}
+```
+
+### Exemplo de body (POST turista habitante)
+
+```json
+{
+  "coloniaId": 1,
+  "nome": "Yuki Tanaka",
+  "nacionalidade": "Japonesa",
+  "dataChegada": "2035-07-15",
+  "agenciaTurismo": "SpaceX Travel",
+  "pacoteSelecionado": "VIP"
+}
+```
+
+---
+
+# ✅ Saúde dos Habitantes
+
+### Permite
+
+- registrar sinais vitais do habitante (gera alerta automático se crítico)
+- consultar histórico de saúde paginado
+- consultar último registro de saúde
+
+### Endpoints
+
+```http
+GET  /api/habitantes/{id}/saude?page=0&size=10
+GET  /api/habitantes/{id}/saude/ultimo
+POST /api/habitantes/{id}/saude
+```
+
+### Exemplo de body (POST sinais vitais)
+
+```json
+{
+  "pressaoArterial": "120/80",
+  "frequenciaCardiaca": 72,
+  "saturacaoOxigenio": 98.0,
+  "temperaturaCorporal": 36.5,
+  "observacoes": "Checkup de rotina - todos os parâmetros normais"
+}
+```
+
+> ⚠️ Sinais vitais críticos (ex: saturação abaixo de 90, temperatura acima de 40) **geram alertas automáticos**.
+
+---
+
+# ✅ Treinamentos
+
+### Permite
+
+- criar e gerenciar treinamentos
+- listar treinamentos por habitante
+- concluir treinamento (necessário antes de reservar viagem)
+
+### Endpoints
+
+```http
+GET    /api/treinamentos
+GET    /api/treinamentos/{id}
+POST   /api/treinamentos
+PUT    /api/treinamentos/{id}
+DELETE /api/treinamentos/{id}
+```
+
+---
+
+# ✅ Viagens Turísticas
+
+### Permite
+
+- reservar viagem com pacote BASICO, PREMIUM ou VIP
+- listar viagens por habitante ou status
+- iniciar, concluir e cancelar viagens
+
+### Endpoints
+
+```http
+GET   /api/viagens
+GET   /api/viagens?habitanteId={id}
+GET   /api/viagens?status=RESERVADA
+GET   /api/viagens/{id}
+POST  /api/viagens
+PATCH /api/viagens/{id}/iniciar
+PATCH /api/viagens/{id}/concluir
+PATCH /api/viagens/{id}/cancelar
+```
+
+### Exemplo de body (POST reserva)
+
+```json
+{
+  "habitanteId": 7,
+  "coloniaId": 1,
+  "dataPartida": "2035-09-01",
+  "dataRetorno": "2035-09-15",
+  "pacote": "BASICO"
+}
+```
+
+> Pacotes válidos: `BASICO`, `PREMIUM`, `VIP`  
+> ⚠️ O habitante precisa ter treinamento concluído para reservar viagem.
+
+---
+
+# ✅ Alertas
+
+### Permite
+
+- listar todos os alertas ou filtrar por severidade e status
+- buscar alerta por ID
+- resolver alerta individual com observação
+- resolver alertas em lote por tipo para uma colônia
+
+### Endpoints
+
+```http
+GET   /api/alertas
+GET   /api/alertas?severidade=CRITICA&status=ABERTO
+GET   /api/alertas/{id}
+PATCH /api/alertas/{id}/resolver
+PATCH /api/alertas/colonias/{coloniaId}/resolver-lote?tipoAlerta=RECURSO_CRITICO
+```
+
+### Exemplo de body (PATCH resolver)
+
+```json
+{
+  "observacao": "Recurso reabastecido via cápsula de suprimentos. Nível normalizado."
+}
+```
+
+> Severidades: `CRITICA`, `ALTA`, `MEDIA`, `BAIXA`  
+> Status: `ABERTO`, `RESOLVIDO`
 
 ---
 
 # ⭐ Diferenciais da API
 
-# ✅ Sistema Inteligente de Alertas
+# ✅ Alertas Automáticos por Sinais Vitais
 
-A API gera alertas automáticos com base nas informações clínicas cadastradas.
-
-### Exemplos
-
-- <!-- ⚠️ ADAPTAR: tipos de alerta do AresLife -->
+Ao registrar sinais vitais críticos de um habitante, o sistema dispara automaticamente um alerta sem necessidade de intervenção humana.
 
 ### Endpoint
 
 ```http
-GET /alertas/<!-- ⚠️ ADAPTAR -->/{id}
+POST /api/habitantes/{id}/saude
 ```
 
 ---
 
-# ✅ Score de Risco
+# ✅ Simulação de Dia na Colônia
 
-O sistema calcula automaticamente o nível de risco com base em:
-
-- <!-- ⚠️ ADAPTAR: critérios de risco do AresLife -->
-
-### Níveis
-
-- BAIXO
-- MÉDIO
-- ALTO
+O sistema simula o consumo diário de todos os recursos de uma colônia, atualizando os estoques e gerando alertas caso algum recurso atinja o nível crítico.
 
 ### Endpoint
 
 ```http
-GET /<!-- ⚠️ ADAPTAR -->/risco/{id}
+POST /api/colonias/{id}/simular-dia
 ```
 
 ---
 
-# ✅ Histórico Longitudinal
+# ✅ Cálculo de Autonomia de Recursos
 
-A API fornece uma visão completa da jornada do paciente.
-
-### Informações exibidas
-
-- consultas
-- tratamentos
-- alertas
-- nível de risco
+O sistema calcula automaticamente por quantos dias o estoque atual de um recurso durará com base no histórico de consumo.
 
 ### Endpoint
 
 ```http
-GET /<!-- ⚠️ ADAPTAR -->/{id}/historico
+GET /api/colonias/{coloniaId}/recursos/{recursoId}/autonomia?tipo=OXIGENIO
 ```
 
 ---
 
-# ✅ Dashboard
+# ✅ Operação Autônoma (Marte)
 
-O sistema fornece métricas gerais consolidadas.
+Em Marte, com latência de 3 a 22 minutos com a Terra, o sistema opera de forma completamente autônoma:
 
-### Exemplos
-
-- <!-- ⚠️ ADAPTAR: métricas do AresLife -->
-
-### Endpoint
-
-```http
-GET /dashboard
-```
+- alertas disparados localmente sem comunicação com a Terra
+- simulação de consumo e projeção de escassez processadas no edge
+- histórico armazenado localmente com sincronização posterior
 
 ---
 
@@ -657,16 +953,14 @@ src/main/java/com/fiap/areslife
 
 ---
 
-# 🏥 Objetivo Final
+# 🚀 Objetivo Final
 
-O objetivo do **AresLife** é transformar a gestão de saúde e emergências através de:
+O objetivo do **AresLife** é ser a espinha dorsal digital que tornará possível a colonização sustentável e o turismo espacial em escala comercial, através de:
 
-- inteligência clínica
-- automação
-- monitoramento contínuo
-- centralização de dados
-- experiência digital moderna
-
-Criando uma solução escalável para o futuro da saúde digital.
+- inteligência operacional em tempo real
+- automação e alertas proativos
+- monitoramento contínuo e autônomo
+- centralização de dados de colônias, recursos e habitantes
+- experiência digital moderna alinhada às missões NASA Artemis · SpaceX Starship · ESA Moon Village
 
 ---
