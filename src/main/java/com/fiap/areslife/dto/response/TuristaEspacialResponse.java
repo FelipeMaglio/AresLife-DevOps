@@ -1,19 +1,29 @@
 package com.fiap.areslife.dto.response;
 
+import com.fiap.areslife.enums.Localizacao;
+import com.fiap.areslife.enums.StatusTurista;
 import org.springframework.hateoas.RepresentationModel;
 
-public class TuristaEspacialResponse extends RepresentationModel<TuristaEspacialResponse> {
+import java.time.LocalDate;
 
+public class TuristaEspacialResponse extends RepresentationModel<TuristaEspacialResponse> {
     private Long id;
     private String nome;
     private Integer idade;
     private String pais;
-    private String destino;
-    private String status;
+    private Localizacao destino;
+    private StatusTurista status;
 
     public TuristaEspacialResponse() {}
 
-    public TuristaEspacialResponse(Long id, String nome, Integer idade, String pais, String destino, String status) {
+    public TuristaEspacialResponse(
+            Long id,
+            String nome,
+            Integer idade,
+            String pais,
+            Localizacao destino,
+            StatusTurista status) {
+
         this.id = id;
         this.nome = nome;
         this.idade = idade;
@@ -26,13 +36,5 @@ public class TuristaEspacialResponse extends RepresentationModel<TuristaEspacial
     public String getNome() { return nome; }
     public Integer getIdade() { return idade; }
     public String getPais() { return pais; }
-    public String getDestino() { return destino; }
-    public String getStatus() { return status; }
-
-    public void setId(Long id) { this.id = id; }
-    public void setNome(String nome) { this.nome = nome; }
-    public void setIdade(Integer idade) { this.idade = idade; }
-    public void setPais(String pais) { this.pais = pais; }
-    public void setDestino(String destino) { this.destino = destino; }
-    public void setStatus(String status) { this.status = status; }
-}
+    public Localizacao getDestino() { return destino; }
+    public StatusTurista getStatus() { return status; }}
