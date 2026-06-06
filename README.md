@@ -234,7 +234,7 @@ az vm run-command invoke \
 --resource-group rg-areslife \
 --name vm-areslife \
 --command-id RunShellScript \
---scripts 'sudo docker exec areslife-api whoami'
+--scripts 'sudo docker exec app-rm564339 whoami'
 ```
 
 ### Resultado esperado
@@ -258,7 +258,7 @@ az vm run-command invoke \
 ### Resultado esperado
 
 ```text
-AresLife-DevOps_oracle-data
+areslife-devops_oracle-data
 ```
 
 ---
@@ -270,7 +270,7 @@ az vm run-command invoke \
 --resource-group rg-areslife \
 --name vm-areslife \
 --command-id RunShellScript \
---scripts 'cd /home/azureuser/AresLife-DevOps && sudo docker compose logs --tail=20 app'
+--scripts 'cd /home/azureuser/AresLife-DevOps && sudo docker compose logs --tail=20 app-rm564339'
 ```
 
 ### Resultado esperado
@@ -477,7 +477,7 @@ docker compose ps
 ## 📜 Ver logs da aplicação
 
 ```bash
-docker compose logs -f app
+docker compose logs -f app-rm564339
 ```
 
 ---
@@ -485,7 +485,7 @@ docker compose logs -f app
 ## 🗄️ Ver logs do Oracle
 
 ```bash
-docker compose logs -f oracle
+docker compose logs -f oracle-rm564339
 ```
 
 ---
