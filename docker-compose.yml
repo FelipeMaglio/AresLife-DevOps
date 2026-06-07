@@ -1,8 +1,7 @@
 services:
-
-  oracle-rm563512:
+  oracle-rm564339:
     image: gvenzl/oracle-xe:21-slim
-    container_name: oracle-rm563512
+    container_name: oracle-rm564339
     shm_size: 1g
     environment:
       ORACLE_PASSWORD: Oracle@2026
@@ -21,14 +20,13 @@ services:
     networks:
       - app-network
     restart: unless-stopped
-
-  app-rm563512:
+  app-rm564339:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: app-rm563512
+    container_name: app-rm564339
     environment:
-      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@oracle-rm563512:1521/XEPDB1
+      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@oracle-rm564339:1521/XEPDB1
       SPRING_DATASOURCE_USERNAME: areslife
       SPRING_DATASOURCE_PASSWORD: Ares@2026
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -36,16 +34,14 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      oracle-rm563512:
+      oracle-rm564339:
         condition: service_healthy
     networks:
       - app-network
     restart: unless-stopped
-
 volumes:
   oracle-data:
     driver: local
-
 networks:
   app-network:
     driver: bridge
