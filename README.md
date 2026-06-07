@@ -285,6 +285,78 @@ Confirmando que o Spring Boot iniciou corretamente.
 
 ---
 
+## 🗂️ Evidência 5 — docker exec no container da API
+
+```bash
+az vm run-command invoke \
+--resource-group rg-areslife \
+--name vm-areslife \
+--command-id RunShellScript \
+--scripts 'sudo docker exec app-rm564339 sh -c "whoami && pwd && ls -l"'
+```
+
+### Resultado esperado
+
+```text
+appuser
+/app
+total XX
+-rw-r--r-- 1 appuser appuser ... app.jar
+```
+
+---
+
+## 🗂️ Evidência 6 — docker exec no container do Oracle
+
+```bash
+az vm run-command invoke \
+--resource-group rg-areslife \
+--name vm-areslife \
+--command-id RunShellScript \
+--scripts 'sudo docker exec oracle-rm564339 sh -c "whoami && pwd && ls -l /opt/oracle"'
+```
+
+### Resultado esperado
+
+```text
+oracle
+/
+drwxr-xr-x ... oradata
+drwxr-xr-x ... product
+```
+
+---
+
+## 🗄️ Evidência 7 — SELECT direto dentro do container Oracle
+
+```bash
+az vm run-command invoke \
+--resource-group rg-areslife \
+--name vm-areslife \
+--command-id RunShellScript \
+--scripts 'sudo docker exec oracle-rm564339 sqlplus -s areslife/Ares@2026@localhost:1521/XEPDB1 <<EOF
+SELECT table_name FROM user_tables ORDER BY table_name;
+EXIT;
+EOF'
+```
+
+### Resultado esperado
+
+```text
+TABLE_NAME
+------------------------------
+ALERTAS
+COLONIAS
+HABITANTES
+RECURSOS
+SAUDE_HABITANTES
+TREINAMENTOS
+TURISTAS
+VIAGENS
+```
+
+---
+
 Após finalizar, acesse:
 
 ### Swagger
