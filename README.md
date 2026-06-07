@@ -258,7 +258,7 @@ az vm run-command invoke \
 ### Resultado esperado
 
 ```text
-oracle-data
+areslife-devops_oracle-data
 ```
 
 ---
@@ -327,22 +327,25 @@ drwxr-xr-x ... product
 
 ---
 
-## 🗄️ Evidência 7 — SELECT direto dentro do container Oracle
+## 🗄️ Evidência 7 — SELECT direto dentro do container Oracle (via sysdba)
 
 ```bash
 az vm run-command invoke \
 --resource-group rg-areslife \
 --name vm-areslife \
 --command-id RunShellScript \
---scripts 'sudo docker exec oracle-rm564339 sqlplus -s areslife/Ares@2026@localhost:1521/XEPDB1 <<EOF
-SELECT table_name FROM user_tables ORDER BY table_name;
+--scripts 'sudo docker exec oracle-rm564339 bash -c "ORACLE_SID=XE ORACLE_HOME=/opt/oracle/product/21c/dbhomeXE PATH=/opt/oracle/product/21c/dbhomeXE/bin:\$PATH sqlplus -s / as sysdba << EOF
+ALTER SESSION SET CONTAINER=XEPDB1;
+SELECT table_name FROM all_tables WHERE owner='"'"'ARESLIFE'"'"' ORDER BY table_name;
 EXIT;
-EOF'
+EOF"'
 ```
 
 ### Resultado esperado
 
 ```text
+Session altered.
+
 TABLE_NAME
 ------------------------------
 ALERTAS
@@ -354,6 +357,8 @@ TREINAMENTOS
 TURISTAS
 VIAGENS
 ```
+
+> Conectado diretamente no container Oracle via `docker exec` usando `sqlplus` como sysdba, sem nenhuma ferramenta externa.
 
 ---
 
