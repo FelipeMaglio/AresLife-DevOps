@@ -234,7 +234,7 @@ az vm run-command invoke \
 --resource-group rg-areslife \
 --name vm-areslife \
 --command-id RunShellScript \
---scripts 'sudo docker exec app-rm563512 whoami'
+--scripts 'sudo docker exec app-rm564339 whoami'
 ```
 
 ### Resultado esperado
@@ -270,7 +270,7 @@ az vm run-command invoke \
 --resource-group rg-areslife \
 --name vm-areslife \
 --command-id RunShellScript \
---scripts 'cd /home/azureuser/AresLife-DevOps && sudo docker compose logs --tail=20 app-rm563512'
+--scripts 'cd /home/azureuser/AresLife-DevOps && sudo docker compose logs --tail=20 app-rm564339'
 ```
 
 ### Resultado esperado
@@ -292,7 +292,7 @@ az vm run-command invoke \
 --resource-group rg-areslife \
 --name vm-areslife \
 --command-id RunShellScript \
---scripts 'sudo docker exec app-rm563512 sh -c "whoami && pwd && ls -l"'
+--scripts 'sudo docker exec app-rm564339 sh -c "whoami && pwd && ls -l"'
 ```
 
 ### Resultado esperado
@@ -313,7 +313,7 @@ az vm run-command invoke \
 --resource-group rg-areslife \
 --name vm-areslife \
 --command-id RunShellScript \
---scripts 'sudo docker exec oracle-rm563512 sh -c "whoami && pwd && ls -l /opt/oracle"'
+--scripts 'sudo docker exec oracle-rm564339 sh -c "whoami && pwd && ls -l /opt/oracle"'
 ```
 
 ### Resultado esperado
@@ -334,7 +334,7 @@ az vm run-command invoke \
 --resource-group rg-areslife \
 --name vm-areslife \
 --command-id RunShellScript \
---scripts 'sudo docker exec oracle-rm563512 sqlplus -s areslife/Ares@2026@localhost:1521/XEPDB1 <<EOF
+--scripts 'sudo docker exec oracle-rm564339 sqlplus -s areslife/Ares@2026@localhost:1521/XEPDB1 <<EOF
 SELECT table_name FROM user_tables ORDER BY table_name;
 EXIT;
 EOF'
@@ -549,7 +549,7 @@ docker compose ps
 ## 📜 Ver logs da aplicação
 
 ```bash
-docker compose logs -f app-rm563512
+docker compose logs -f app-rm564339
 ```
 
 ---
@@ -557,7 +557,7 @@ docker compose logs -f app-rm563512
 ## 🗄️ Ver logs do Oracle
 
 ```bash
-docker compose logs -f oracle-rm563512
+docker compose logs -f oracle-rm564339
 ```
 
 ---
